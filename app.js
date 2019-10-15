@@ -36,13 +36,13 @@ function renderProducts() {
   uniquePicsArray[1] = makeRandom();
   //here we are checking to see if you uniquePicsArray at index 1 is equal to index 2, if so reassign index 1 by calling makeRandom()
   while(uniquePicsArray[0] === uniquePicsArray[1]){
-    console.log('Duplicate Found');
+    console.log('line 39 Duplicate Found');
     uniquePicsArray[1] = makeRandom();
   }
   //creating the 3rd number in the array and ensuring that it does not match the previous 2 indexes
   uniquePicsArray[2] = makeRandom();
   while(uniquePicsArray[2] === uniquePicsArray[1] || uniquePicsArray[2] === uniquePicsArray[0] ){
-    console.log('Duplicate Found');
+    console.log('line 45 Duplicate Found');
     uniquePicsArray[2] = makeRandom();
   }
   //add views here
@@ -85,9 +85,14 @@ function handleClick() {
     if (allProducts[i].name === chosenImages) {
       allProducts[i].votes++;
       countingVotes++;
-      while (countingVotes < 26) {
+      console.log('countingVotes: ', countingVotes);
+      while (countingVotes < 5) {
         renderProducts();
+        return;
       }
+      containerEl.removeEventListener('click', handleClick);
+      containerEl.remove();
+      //function makeChart() gets called right here.
     }
   }
 }
