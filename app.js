@@ -14,7 +14,6 @@ var containerEl = document.getElementById('image_container');
 var countingVotes = 0;
 
 var allProducts = [];
-
 // This constructor function is saying what to do with the image, pushing all of them into an array when finished which then will generate photos
 function Product(name) {
   this.name = name;
@@ -93,6 +92,45 @@ function renderProducts() {
 //   }
 // }
 
+
+// var ctx = document.getElementById('myChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['this.name'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255, 99, 132, 1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true
+//         }
+//       }]
+//     }
+//   }
+// });
+
 // These products will be pushed into the Array at the beginning of the code.
 new Product('bag');
 new Product('banana');
@@ -113,20 +151,35 @@ function handleClick() {
       allProducts[i].votes++;
       countingVotes++;
       console.log('countingVotes: ', countingVotes);
-      while (countingVotes < 5) {
+      while (countingVotes < 6) {
         renderProducts();
         return;
       }
       containerEl.removeEventListener('click', handleClick);
       containerEl.remove();
-      //function makeChart() gets called right here.
+      makeList();
+
     }
   }
 }
 
+function makeList() {
+  var tallyUl = document.getElementById('tally');
+  for (var i = 0; i < allProducts.length; i++) {
+    var listElement = document.createElement('li');
+    listElement.textContent = allProducts[i].name + ' has ' + allProducts[i].votes + ' votes';
+    tallyUl.appendChild(listElement);
+  }
+
+}
+
+
+
+
+
+// countingVotes();
 // I'm telling JavaScript that each time there's a click in the container handle the click by changing photos.
 containerEl.addEventListener('click', handleClick);
-
 
 //we are re rendering so that the code will run.
 renderProducts();
