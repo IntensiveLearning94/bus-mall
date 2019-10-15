@@ -31,16 +31,20 @@ function makeRandom() {
 function renderProducts() {
   //create an array to hold unique indexes
   var uniquePicsArray = [];
-  //assign values to index 0 and 1
+  //assigns random values to uniquePicsArray index 1 and 2
   uniquePicsArray[0] = makeRandom();
   uniquePicsArray[1] = makeRandom();
-  uniquePicsArray[2] = makeRandom();
-
-  while (uniquePicsArray[0] === uniquePicsArray[2]) {
-    console.log('Duplicate found, Re-rolling!', uniquePicsArray[0].votes());
+  //here we are checking to see if you uniquePicsArray at index 1 is equal to index 2, if so reassign index 1 by calling makeRandom()
+  while(uniquePicsArray[0] === uniquePicsArray[1]){
+    console.log('Duplicate Found');
     uniquePicsArray[1] = makeRandom();
   }
-
+  //creating the 3rd number in the array and ensuring that it does not match the previous 2 indexes
+  uniquePicsArray[2] = makeRandom();
+  while(uniquePicsArray[2] === uniquePicsArray[1] || uniquePicsArray[2] === uniquePicsArray[0] ){
+    console.log('Duplicate Found');
+    uniquePicsArray[2] = makeRandom();
+  }
   //add views here
   allProducts[uniquePicsArray[0]].views++;
   //get a random index
@@ -77,11 +81,11 @@ new Product('dog-duck');
 function handleClick() {
   var chosenImages = event.target.title;
   console.log('chosenImage: ', chosenImages);
-  for (var i = 0; i < allProducts.length; i++) {
+  for (var i =  0; i < allProducts.length; i++) {
     if (allProducts[i].name === chosenImages) {
       allProducts[i].votes++;
       countingVotes++;
-      while (countingVotes < 10) {
+      while (countingVotes < 26) {
         renderProducts();
       }
     }
