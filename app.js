@@ -1,23 +1,21 @@
 'use strict';
 
-var leftImageEl = document.getElementById('left');
-var rightImageEl = document.getElementById('right');
-var centerImageEl = document.getElementById('center');
+
+// var totalVotes = document.getElementById('tallying votes');
+
+
+// Here we are saying where were gettiing the photos from and saying the position in the container we'd like for them to have.
+var leftImages = document.getElementById('left');
+var rightImages = document.getElementById('right');
+var centerImages = document.getElementById('center');
 
 var containerEl = document.getElementById('image_container');
+
 var countingVotes = 0;
-
-// leftImageEl.src = 'images/bag.jpg';
-// leftImageEl.name = 'bag.jpg';
-// leftImageEl.title = 'bag.jpg';
-
-// rightImageEl.src = 'images/boots.jpg';
-// rightImageEl.name = 'boots.jpg';
-// rightImageEl.title = 'boots.jpg';
 
 var allProducts = [];
 
-
+// This constructor function is saying what to do with the image, pushing all of them into an array when finished which then will generate photos
 function Product(name) {
   this.name = name;
   this.path = `images/${name}.jpg`;
@@ -43,26 +41,28 @@ function renderProducts() {
     uniquePicsArray[1] = makeRandom();
   }
 
-
   //add views here
   allProducts[uniquePicsArray[0]].views++;
   //get a random index
   //display a product whose index is the random number
-  leftImageEl.src = allProducts[uniquePicsArray[0]].path;
-  leftImageEl.name = allProducts[uniquePicsArray[0]].name;
-  leftImageEl.title = allProducts[uniquePicsArray[0]].name;
+  leftImages.src = allProducts[uniquePicsArray[0]].path;
+  leftImages.name = allProducts[uniquePicsArray[0]].name;
+  leftImages.title = allProducts[uniquePicsArray[0]].name;
+
   //add views here
   allProducts[uniquePicsArray[1]].views++;
-  rightImageEl.src = allProducts[uniquePicsArray[1]].path;
-  rightImageEl.name = allProducts[uniquePicsArray[1]].name;
-  rightImageEl.title = allProducts[uniquePicsArray[1]].name;
+  rightImages.src = allProducts[uniquePicsArray[1]].path;
+  rightImages.name = allProducts[uniquePicsArray[1]].name;
+  rightImages.title = allProducts[uniquePicsArray[1]].name;
 
-  centerImageEl.src = allProducts[uniquePicsArray[2]].path;
-  centerImageEl.name = allProducts[uniquePicsArray[2]].name;
-  centerImageEl.title = allProducts[uniquePicsArray[2]].name;
+  // the center image will generate a third picture within the container
+  allProducts[uniquePicsArray[2]].views++;
+  centerImages.src = allProducts[uniquePicsArray[2]].path;
+  centerImages.name = allProducts[uniquePicsArray[2]].name;
+  centerImages.title = allProducts[uniquePicsArray[2]].name;
 }
 
-
+// These products will be pushed into the Array at the beginning of the code.
 new Product('bag');
 new Product('banana');
 new Product('bathroom');
@@ -73,20 +73,24 @@ new Product('chair');
 new Product('cthulhu');
 new Product('dog-duck');
 
+// this tells you not to repeat the same image more than once on the same page, and it also keeps track of the votes and increases each vote by one everytime
 function handleClick() {
-  var chosenImage = event.target.title;
-  console.log('chosenImage: ', chosenImage);
+  var chosenImages = event.target.title;
+  console.log('chosenImage: ', chosenImages);
   for (var i = 0; i < allProducts.length; i++) {
-    if (allProducts[i].name === chosenImage) {
+    if (allProducts[i].name === chosenImages) {
       allProducts[i].votes++;
       countingVotes++;
+      while (countingVotes < 10) {
+        renderProducts();
+      }
     }
-  }
-  while (countingVotes < 2) {
-    renderProducts();
   }
 }
 
+// I'm telling JavaScript that each time there's a click in the container handle the click by changing photos.
 containerEl.addEventListener('click', handleClick);
 
+
+//we are re rendering so that the code will run.
 renderProducts();
