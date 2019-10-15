@@ -35,13 +35,13 @@ function renderProducts() {
   uniquePicsArray[0] = makeRandom();
   uniquePicsArray[1] = makeRandom();
   //here we are checking to see if you uniquePicsArray at index 1 is equal to index 2, if so reassign index 1 by calling makeRandom()
-  while(uniquePicsArray[0] === uniquePicsArray[1]){
+  while (uniquePicsArray[0] === uniquePicsArray[1]) {
     console.log('line 39 Duplicate Found');
     uniquePicsArray[1] = makeRandom();
   }
   //creating the 3rd number in the array and ensuring that it does not match the previous 2 indexes
   uniquePicsArray[2] = makeRandom();
-  while(uniquePicsArray[2] === uniquePicsArray[1] || uniquePicsArray[2] === uniquePicsArray[0] ){
+  while (uniquePicsArray[2] === uniquePicsArray[1] || uniquePicsArray[2] === uniquePicsArray[0]) {
     console.log('line 45 Duplicate Found');
     uniquePicsArray[2] = makeRandom();
   }
@@ -66,6 +66,33 @@ function renderProducts() {
   centerImages.title = allProducts[uniquePicsArray[2]].name;
 }
 
+// BELOW IS POTENTIAL NEW CODE TO ADD!!!
+
+// function uniqueArrayGenerator() {
+//   // keeps the array filled with 6 unique values
+//   while (Product.uniquePicsArray.length < 6) {
+//     var random = makeRandomNumber();
+//     while (!Product.uniquePicsArray.includes(random)) {
+//       Product
+//     }
+//   }
+
+// }
+
+// function displayingPhotos() {
+//   uniqueArrayGenerator();
+//   for (var i = 0; i < Product.uniquePicsArray.length; i++) {
+//     // value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
+//     var temp = Product.uniquePicsArray.shift();
+
+
+//     Product.pics[i].src = Product.all[temp].path;
+//     Product.pics[i].id = Product.all[temp].name;
+//     Product.all[temp].views += 1;
+
+//   }
+// }
+
 // These products will be pushed into the Array at the beginning of the code.
 new Product('bag');
 new Product('banana');
@@ -81,7 +108,7 @@ new Product('dog-duck');
 function handleClick() {
   var chosenImages = event.target.title;
   console.log('chosenImage: ', chosenImages);
-  for (var i =  0; i < allProducts.length; i++) {
+  for (var i = 0; i < allProducts.length; i++) {
     if (allProducts[i].name === chosenImages) {
       allProducts[i].votes++;
       countingVotes++;
