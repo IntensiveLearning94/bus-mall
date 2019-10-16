@@ -65,71 +65,47 @@ function renderProducts() {
   centerImages.title = allProducts[uniquePicsArray[2]].name;
 }
 
-// BELOW IS POTENTIAL NEW CODE TO ADD!!!
+var names = [];
+function voteEnd() {
 
-// function uniqueArrayGenerator() {
-//   // keeps the array filled with 6 unique values
-//   while (Product.uniquePicsArray.length < 6) {
-//     var random = makeRandomNumber();
-//     while (!Product.uniquePicsArray.includes(random)) {
-//       Product
-//     }
-//   }
-
-// }
-
-// function displayingPhotos() {
-//   uniqueArrayGenerator();
-//   for (var i = 0; i < Product.uniquePicsArray.length; i++) {
-//     // value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
-//     var temp = Product.uniquePicsArray.shift();
-
-
-//     Product.pics[i].src = Product.all[temp].path;
-//     Product.pics[i].id = Product.all[temp].name;
-//     Product.all[temp].views += 1;
-
-//   }
-// }
-
-
-// var ctx = document.getElementById('myChart').getContext('2d');
-// var myChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels: ['this.name'],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [12, 19, 3, 5, 2, 3],
-//       backgroundColor: [
-//         'rgba(255, 99, 132, 0.2)',
-//         'rgba(54, 162, 235, 0.2)',
-//         'rgba(255, 206, 86, 0.2)',
-//         'rgba(75, 192, 192, 0.2)',
-//         'rgba(153, 102, 255, 0.2)',
-//         'rgba(255, 159, 64, 0.2)'
-//       ],
-//       borderColor: [
-//         'rgba(255, 99, 132, 1)',
-//         'rgba(54, 162, 235, 1)',
-//         'rgba(255, 206, 86, 1)',
-//         'rgba(75, 192, 192, 1)',
-//         'rgba(153, 102, 255, 1)',
-//         'rgba(255, 159, 64, 1)'
-//       ],
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     scales: {
-//       yAxes: [{
-//         ticks: {
-//           beginAtZero: true
-//         }
-//       }]
-//     }
-//   }
-// });
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var makingChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Votes',
+        data: caclulatingVotes(),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
 
 // These products will be pushed into the Array at the beginning of the code.
 new Product('bag');
@@ -140,8 +116,19 @@ new Product('breakfast');
 new Product('bubblegum');
 new Product('chair');
 new Product('cthulhu');
-new Product('dog-duck');
+new Product('dragon');
+new Product('scissors');
+new Product('pen');
+new Product('sweep');
+new Product('water-can');
+new Product('wine-glass');
+new Product('tauntaun');
+new Product('usb');
 
+for (var i = 0; i < allProducts.length; i++) {
+  names.push(allProducts[i].name);
+}
+console.log(names);
 // this tells you not to repeat the same image more than once on the same page, and it also keeps track of the votes and increases each vote by one everytime
 function handleClick() {
   var chosenImages = event.target.title;
@@ -151,27 +138,41 @@ function handleClick() {
       allProducts[i].votes++;
       countingVotes++;
       console.log('countingVotes: ', countingVotes);
-      while (countingVotes < 6) {
+      while (countingVotes < 25) {
         renderProducts();
         return;
       }
       containerEl.removeEventListener('click', handleClick);
       containerEl.remove();
-      makeList();
+      caclulatingVotes();
+      // makingChart.update();
+      voteEnd();
+
 
     }
   }
 }
 
-function makeList() {
-  var tallyUl = document.getElementById('tally');
+
+
+function caclulatingVotes() {
+  var voteTotals = [];
   for (var i = 0; i < allProducts.length; i++) {
-    var listElement = document.createElement('li');
-    listElement.textContent = allProducts[i].name + ' has ' + allProducts[i].votes + ' votes';
-    tallyUl.appendChild(listElement);
+    voteTotals.push(allProducts[i].votes);
   }
 
+
+  console.log('VOTE TOTALS', voteTotals);
+  return voteTotals;
+
 }
+
+
+// for (var i = 0; i < allProducts.length; i++) {
+// allProducts[i].name + ' has ' + allProducts[i].votes + ' votes';
+// }
+
+// }
 
 
 
