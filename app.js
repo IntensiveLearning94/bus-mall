@@ -75,7 +75,7 @@ function voteEnd() {
       labels: names,
       datasets: [{
         label: '# of Votes',
-        data: caclulatingVotes(),
+        data: calculatingVotes(),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -107,28 +107,59 @@ function voteEnd() {
   });
 }
 
+if (localStorage.data) {
+  retrieveData();
+} else {
+  console.log('Oh wow no data lol');
+  new Product('bag');
+  new Product('banana');
+  new Product('bathroom');
+  new Product('boots');
+  new Product('breakfast');
+  new Product('bubblegum');
+  new Product('chair');
+  new Product('cthulhu');
+  new Product('dragon');
+  new Product('scissors');
+  new Product('pen');
+  new Product('sweep');
+  new Product('water-can');
+  new Product('wine-glass');
+  new Product('tauntaun');
+  new Product('usb');
+}
 // These products will be pushed into the Array at the beginning of the code.
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dragon');
-new Product('scissors');
-new Product('pen');
-new Product('sweep');
-new Product('water-can');
-new Product('wine-glass');
-new Product('tauntaun');
-new Product('usb');
+
 
 for (var i = 0; i < allProducts.length; i++) {
   names.push(allProducts[i].name);
 }
 console.log(names);
+
+
+function storeData() {
+  var allProductsStringified = JSON.stringify(allProducts);
+  // var storingVoteDataParse = JSON.stringify(allProducts);
+  console.log('SAVING DATAAA', allProductsStringified);
+  localStorage.setItem('data', allProductsStringified);
+  // storing data into local storage'
+}
+
+function retrieveData() {
+  var storageAllProducts = localStorage.getItem('data');
+  var parsedAllProducts = JSON.parse(storageAllProducts);
+
+  console.log('LOADING DATA', parsedAllProducts);
+
+  for (var h = 0; h < parsedAllProducts.length; h++) {
+    var createdProduct = new Product(parsedAllProducts[h].name);
+
+    //votes
+    createdProduct.votes = parsedAllProducts[h].votes;
+    createdProduct.views = parsedAllProducts[h].views;
+    //views
+  }
+}
 // this tells you not to repeat the same image more than once on the same page, and it also keeps track of the votes and increases each vote by one everytime
 function handleClick() {
   var chosenImages = event.target.title;
@@ -142,20 +173,40 @@ function handleClick() {
         renderProducts();
         return;
       }
+      //GAME OVER MAN
       containerEl.removeEventListener('click', handleClick);
       containerEl.remove();
-      caclulatingVotes();
+      calculatingVotes();
       // makingChart.update();
+      storeData();
       voteEnd();
-
-
     }
+
   }
+
 }
 
+// store dogs at a shelter
+
+// build a constructor function
+// function Dogs(name, age) {
+//   this.name = name;
+//   this.age = age;
+//   allProducts.push(this);
+// }
+// instantiate dogs
+// if(there is local stroage) {
+//   -retrieve data from local storage
+//   -assign data to where it will be used
+// } else {
+//   create instances
+
+// }
+// render to page
 
 
-function caclulatingVotes() {
+
+function calculatingVotes() {
   var voteTotals = [];
   for (var i = 0; i < allProducts.length; i++) {
     voteTotals.push(allProducts[i].votes);
