@@ -11,6 +11,7 @@ var centerImages = document.getElementById('center');
 
 var containerEl = document.getElementById('image_container');
 
+// votes start at 0
 var countingVotes = 0;
 
 var allProducts = [];
@@ -23,6 +24,7 @@ function Product(name) {
   allProducts.push(this);
 }
 
+// this function generates the math to make the photos appear randomly
 function makeRandom() {
   return Math.floor(Math.random() * allProducts.length);
 }
@@ -44,8 +46,10 @@ function renderProducts() {
     console.log('line 45 Duplicate Found');
     uniquePicsArray[2] = makeRandom();
   }
+
   //add views here
   allProducts[uniquePicsArray[0]].views++;
+
   //get a random index
   //display a product whose index is the random number
   leftImages.src = allProducts[uniquePicsArray[0]].path;
@@ -65,7 +69,11 @@ function renderProducts() {
   centerImages.title = allProducts[uniquePicsArray[2]].name;
 }
 
+// var names was created as an empty array which makes is so that all the names that appear later on will be put into this array and then through code later on will be generated randomly.
 var names = [];
+
+
+// created function vote end so that all the information gets pushed into the chart at the very end.
 function voteEnd() {
 
   var ctx = document.getElementById('myChart').getContext('2d');
@@ -136,8 +144,9 @@ for (var i = 0; i < allProducts.length; i++) {
 }
 console.log(names);
 
-
+// this makes it so that the console will store prior votes and will cause it to keep stacking votes on top of eachother.
 function storeData() {
+
   var allProductsStringified = JSON.stringify(allProducts);
   // var storingVoteDataParse = JSON.stringify(allProducts);
   console.log('SAVING DATAAA', allProductsStringified);
@@ -145,6 +154,7 @@ function storeData() {
   // storing data into local storage'
 }
 
+// were telling it to go get the data that we already have
 function retrieveData() {
   var storageAllProducts = localStorage.getItem('data');
   var parsedAllProducts = JSON.parse(storageAllProducts);
@@ -173,7 +183,6 @@ function handleClick() {
         renderProducts();
         return;
       }
-      //GAME OVER MAN
       containerEl.removeEventListener('click', handleClick);
       containerEl.remove();
       calculatingVotes();
@@ -186,23 +195,6 @@ function handleClick() {
 
 }
 
-// store dogs at a shelter
-
-// build a constructor function
-// function Dogs(name, age) {
-//   this.name = name;
-//   this.age = age;
-//   allProducts.push(this);
-// }
-// instantiate dogs
-// if(there is local stroage) {
-//   -retrieve data from local storage
-//   -assign data to where it will be used
-// } else {
-//   create instances
-
-// }
-// render to page
 
 
 
@@ -218,19 +210,6 @@ function calculatingVotes() {
 
 }
 
-
-// for (var i = 0; i < allProducts.length; i++) {
-// allProducts[i].name + ' has ' + allProducts[i].votes + ' votes';
-// }
-
-// }
-
-
-
-
-
-// countingVotes();
-// I'm telling JavaScript that each time there's a click in the container handle the click by changing photos.
 containerEl.addEventListener('click', handleClick);
 
 //we are re rendering so that the code will run.
