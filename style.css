@@ -1,6 +1,14 @@
-/* #myChart {
-position: absolute;
-top: 2in;
-display: inline;
+h1 {
+    font-style: italic;
+    font-family:'Times New Roman', Times, serif;
+}
 
-} */
+#image_container {
+    display: inline-table;
+    position: absolute;
+    top: 2in;
+}
+
+body {
+    background-color: lightblue;
+}
